@@ -1,0 +1,4 @@
+hi,
+
+this is to check the release pipeline with a linux agent
+Similar to service priniciple, azure service connection has been created and added
