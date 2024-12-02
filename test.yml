@@ -13,10 +13,10 @@ stages:
       fetchDepth: 1
 
     - task: copyfiles@2
-      displayName: 'copy file task'
+      displayName: 'copy specific file task'
       inputs:
         sourcefolder: $(Build.SourcesDirectory)
-        Contents:Feature addition
+        Contents:Feature addition.txt
         targetfolder: $(build.artifactstagingdirectory)
 
     - task: publishbuildartifacts@1
