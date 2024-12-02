@@ -1,0 +1,26 @@
+trigger: none
+
+pool:
+  name: Mpool
+
+stages:
+- stage: dev
+  displayName: 'dev'
+  jobs:
+  - job: job1
+    steps:
+    - checkout: self
+      fetchDepth: 1
+
+    - task: copyfiles@2
+      displayName: 'copy file task'
+      inputs:
+        sourcefolder: $(Build.SourcesDirectory)
+        Contents:Feature addition
+        targetfolder: $(build.artifactstagingdirectory)
+
+    - task: publishbuildartifacts@1
+      displayName: 'publish artifact'
+      inputs:
+       pathtopublish: $(Build.ArtifactStagingDirectory)
+       artifactname: check
