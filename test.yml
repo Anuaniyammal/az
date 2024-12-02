@@ -16,7 +16,7 @@ stages:
       displayName: 'copy specific file task'
       inputs:
         sourcefolder: $(Build.SourcesDirectory)
-        Contents:Feature addition.txt
+        Contents:**/Feature addition.txt'
         targetfolder: $(build.artifactstagingdirectory)
 
     - task: publishbuildartifacts@1
@@ -24,3 +24,5 @@ stages:
       inputs:
        pathtopublish: $(Build.ArtifactStagingDirectory)
        artifactname: check
+
+
