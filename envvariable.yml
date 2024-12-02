@@ -1,0 +1,35 @@
+trigger: none
+
+pool:
+  name: Mpool
+
+variables:
+  approval-variable: 'dev-deployment'
+
+stages:
+- stage: Stage1
+  displayName: 'Stage 1'
+  jobs:
+  - deployment: DeployJob1              
+    displayName: 'Deployment Job in Stage 1'
+    environment: '$(approval-variable)'  
+         
+    strategy:
+      runOnce:                          
+        deploy:
+          steps:
+          - checkout: self
+            fetchDepth: 1
+          - task: CopyFiles@2
+            displayName: 'Copy specific file'
+            inputs:
+              SourceFolder: $(Build.SourcesDirectory)
+              Contents: '**/your-file-name.extension'  # Replace with your actual file pattern or file name
+              TargetFolder: $(Build.ArtifactStagingDirectory)
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact'
+            inputs:
+              PathtoPublish: $(Build.ArtifactStagingDirectory)
+              ArtifactName: 'check'
+
+
