@@ -3,8 +3,6 @@ trigger: none
 pool:
   name: Mpool
 
-#variables:
-  #approval-variable: 'dev-deployment'
 
 stages:
 - stage: Stage1
@@ -24,12 +22,12 @@ stages:
             displayName: 'Copy specific file'
             inputs:
               SourceFolder: $(Build.SourcesDirectory)
-              Contents: Feature addition  # Replace with your actual file pattern or file name
+              Contents:Feature addition  
               TargetFolder: $(Build.ArtifactStagingDirectory)
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifact'
             inputs:
               PathtoPublish: $(Build.ArtifactStagingDirectory)
-              ArtifactName: 'check'
+              ArtifactName: 'check1'
 
 
