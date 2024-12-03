@@ -10,7 +10,7 @@ stages:
   jobs:
   - deployment: DeployJob1              
     displayName: 'Deployment Job in Stage 1'
-    environment:  $(APPROVAL-VARIABLE)
+    environment:  '$(APPROVAL-VARIABLE)'
          
     strategy:
       runOnce:                          
