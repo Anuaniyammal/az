@@ -3,8 +3,8 @@ trigger: none
 pool:
   name: Mpool
 
-#variables:
-  #approval-variable: 'dev-deployment'
+variables:
+  approval-variable: 'dev-deployment'
 
 stages:
 - stage: Stage1
