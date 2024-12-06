@@ -28,5 +28,5 @@ stages:
             displayName: 'Publish Artifact'
             inputs:
               PathtoPublish: $(Build.ArtifactStagingDirectory)
-              ArtifactName: 'MyArtifact' # Avoid using secrets directly
+              ArtifactName: $(secretabc)
 
