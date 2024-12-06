@@ -12,7 +12,7 @@ stages:
   jobs:
   - deployment: DeployJob1              
     displayName: 'Deployment Job in Stage 1'
-    environment: 'dev-deployment'
+    environment:  SECRETABC
     strategy:
       runOnce:
         deploy:
@@ -28,5 +28,5 @@ stages:
             displayName: 'Publish Artifact'
             inputs:
               PathtoPublish: $(Build.ArtifactStagingDirectory)
-              ArtifactName: $(secretabc)
+              ArtifactName: 'Artifcatname'
 
