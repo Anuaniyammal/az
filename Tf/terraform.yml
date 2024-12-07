@@ -2,8 +2,10 @@
 trigger: none
 variables:
   - group: Terraformsecrets
+
 pool:
   name: Mpool
+
 stages:
   - stage: Init
     displayName: Terraform Init
@@ -15,8 +17,8 @@ stages:
               terraformVersion: latest
           - script: >
               terraform --version
-
               terraform -chdir=$(System.DefaultWorkingDirectory)/Tf init -backend-config="storage_account_name=$(storageaccountname)" -backend-config="container_name=$(containername)" -backend-config="key=$(backendkey)" -backend-config="access_key=$(terraform-access-key)" -reconfigure
+
   - stage: Plan
     displayName: Terraform Plan
     dependsOn: Init
@@ -25,9 +27,17 @@ stages:
         steps:
           - script: >
               terraform --version
-
               terraform -chdir=$(System.DefaultWorkingDirectory)/Tf init -backend-config="storage_account_name=$(storageaccountname)" -backend-config="container_name=$(containername)" -backend-config="key=$(backendkey)" -backend-config="access_key=$(terraform-access-key)" -reconfigure
-
               terraform -chdir=$(System.DefaultWorkingDirectory)/Tf plan -out=tfplan
+
   - stage: Deploy
     displayName: Terraform Apply
+    dependsOn: Plan
+    jobs:
+      - job: TerraformApply
+        steps:
+          - script: |
+              terraform --version
+              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf init -backend-config="storage_account_name=$(storageaccountname)" -backend-config="container_name=$(containername)" -backend-config="key=$(backendkey)" -backend-config="access_key=$(terraform-access-key)" -reconfigure
+              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf plan -out=tfplan
+              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf apply -auto-approve tfplan
