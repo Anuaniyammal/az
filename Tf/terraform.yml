@@ -17,7 +17,7 @@ stages:
               terraformVersion: latest
           - script: >
               terraform --version
-              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf init -backend-config="storage_account_name=$(storageaccountname)" -backend-config="container_name=$(containername)" -backend-config="key=$(backendkey)" -backend-config="access_key=$(terraform-access-key)" -reconfigure
+              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf init -backend-config="storage_account_name=$(storageaccountname)" -backend-config="container_name=$(containername)" -backend-config="key=$(backendkey)" -backend-config="access_key=$(terraform-access-key)" -upgrade
 
   - stage: Plan
     displayName: Terraform Plan
@@ -27,7 +27,7 @@ stages:
         steps:
           - script: >
               terraform --version
-              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf init -backend-config="storage_account_name=$(storageaccountname)" -backend-config="container_name=$(containername)" -backend-config="key=$(backendkey)" -backend-config="access_key=$(terraform-access-key)" -reconfigure
+              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf init -backend-config="storage_account_name=$(storageaccountname)" -backend-config="container_name=$(containername)" -backend-config="key=$(backendkey)" -backend-config="access_key=$(terraform-access-key)" -upgrade
               terraform -chdir=$(System.DefaultWorkingDirectory)/Tf plan -out=tfplan
 
   - stage: Deploy
@@ -38,6 +38,6 @@ stages:
         steps:
           - script: |
               terraform --version
-              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf init -backend-config="storage_account_name=$(storageaccountname)" -backend-config="container_name=$(containername)" -backend-config="key=$(backendkey)" -backend-config="access_key=$(terraform-access-key)" -reconfigure
+              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf init -backend-config="storage_account_name=$(storageaccountname)" -backend-config="container_name=$(containername)" -backend-config="key=$(backendkey)" -backend-config="access_key=$(terraform-access-key)" -upgrade
               terraform -chdir=$(System.DefaultWorkingDirectory)/Tf plan -out=tfplan
               terraform -chdir=$(System.DefaultWorkingDirectory)/Tf apply -auto-approve tfplan
