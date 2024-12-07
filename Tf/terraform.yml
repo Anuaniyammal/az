@@ -1,7 +1,10 @@
 ---
 trigger: none
 variables:
-  - group: Terraformsecrets
+  storageaccountname : 'tfcontainers'
+  containername : '1207check'
+  backendkey  : b9state
+  terraform-access-key : 'mlmN6Bhxw2EGf1VllP3W5baSQYwK9p2j2xFjE+aBpHFZSyH8fXMdeoCP3++WdpJK3/7CVI7XQA0d+AStshxZwQ=='
 
 pool:
   name: Mpool
