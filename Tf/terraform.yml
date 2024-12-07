@@ -18,7 +18,7 @@ stages:
               terraformVersion: latest
           - script: |
               terraform --version
-              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf init -backend-config="storage_account_name=$(storageaccountname)" -backend-config="container_name=$(containername)" -backend-config="key=$(backendkey)" -backend-config="access_key=ACESSKEY -reconfigure
+              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf init -backend-config="storage_account_name=$(storageaccountname)" -backend-config="container_name=$(containername)" -backend-config="key=$(backendkey)" -backend-config="access_key=ACESSKEY" -reconfigure
 
   - stage: Plan
     displayName: Terraform Plan
