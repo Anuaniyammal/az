@@ -3,7 +3,7 @@ data "azurerm_resource_group" "example" {
   #location = var.location
 }
 
-resource "azurerm_storage_account" "example" {
+data "azurerm_storage_account" "example" {
   name                     = var.storage_account_name
   resource_group_name      = data.azurerm_resource_group.example.name
   location                 = data.azurerm_resource_group.example.location
