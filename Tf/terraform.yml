@@ -1,1 +1,33 @@
-a
+---
+trigger: none
+variables:
+  - group: Terraformsecrets
+pool:
+  name: Mpool
+stages:
+  - stage: Init
+    displayName: Terraform Init
+    jobs:
+      - job: TerraformInit
+        steps:
+          - task: TerraformInstaller@0
+            inputs:
+              terraformVersion: latest
+          - script: >
+              terraform --version
+
+              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf init -backend-config="storage_account_name=$(storageaccountname)" -backend-config="container_name=$(containername)" -backend-config="key=$(backendkey)" -backend-config="access_key=$(terraform-access-key)" -reconfigure
+  - stage: Plan
+    displayName: Terraform Plan
+    dependsOn: Init
+    jobs:
+      - job: TerraformPlan
+        steps:
+          - script: >
+              terraform --version
+
+              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf init -backend-config="storage_account_name=$(storageaccountname)" -backend-config="container_name=$(containername)" -backend-config="key=$(backendkey)" -backend-config="access_key=$(terraform-access-key)" -reconfigure
+
+              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf plan -out=tfplan
+  - stage: Deploy
+    displayName: Terraform Apply
