@@ -10,7 +10,7 @@ data "azurerm_storage_account" "example" {
   #account_tier             = "Standard"
  # account_replication_type = "GRS"
 
-  tags = {
-    environment = var.environment
-  }
-}
+  #tags = {can't set the tags attribute in a data source block
+    #environment = var.environment
+  #}
+}#
