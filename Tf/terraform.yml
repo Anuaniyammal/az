@@ -1,46 +1,21 @@
----
-trigger: none
-variables:
-  storageaccountname : 'tfcontainers'
-  containername : '1207'
-  backendkey  : b9state1
-  terraform-access-key : 'mlmN6Bhxw2EGf1VllP3W5baSQYwK9p2j2xFjE+aBpHFZSyH8fXMdeoCP3++WdpJK3/7CVI7XQA0d+AStshxZwQ=='
+trigger:none
 
 pool:
   name: Mpool
+  demands:
+    - agent.name -equals Windows2
 
-stages:
-  - stage: Init
-    displayName: Terraform Init
-    jobs:
-      - job: TerraformInit
-        steps:
-          - task: TerraformInstaller@0
-            inputs:
-              terraformVersion: latest
-          - script: |
-              terraform --version
-              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf init -backend-config="storage_account_name=$(storageaccountname)" -backend-config="container_name=$(containername)" -backend-config="key=$(backendkey)" -backend-config="access_key=$(terraform-access-key)" -reconfigure
 
-  - stage: Plan
-    displayName: Terraform Plan
-    dependsOn: Init
-    jobs:
-      - job: TerraformPlan
-        steps:
-          - script: |
-              terraform --version
-              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf init -backend-config="storage_account_name=$(storageaccountname)" -backend-config="container_name=$(containername)" -backend-config="key=$(backendkey)" -backend-config="access_key=$(terraform-access-key)" -reconfigure
-              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf plan -out=tfplan
+variables:
+  - group: 'MyTerraformSecrets'
 
-  - stage: Deploy
-    displayName: Terraform Apply
-    dependsOn: Plan
-    jobs:
-      - job: TerraformApply
-        steps:
-          - script: |
-              terraform --version
-              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf init -backend-config="storage_account_name=$(storageaccountname)" -backend-config="container_name=$(containername)" -backend-config="key=$(backendkey)" -backend-config="access_key=$(terraform-access-key)" -reconfigure
-              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf plan -out=tfplan
-              terraform -chdir=$(System.DefaultWorkingDirectory)/Tf apply -auto-approve
+steps:
+- task: TerraformInstaller@0
+  inputs:
+    terraformVersion: 'latest'
+
+- script: terraform init
+  displayName: 'Initialize Terraform'
+
+- script: terraform apply -auto-approve
+  displayName: 'Apply Terraform Configuration'
