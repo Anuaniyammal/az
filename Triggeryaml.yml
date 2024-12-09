@@ -5,11 +5,11 @@ pool:
 
 
 Schedules:
- - cron: "40 23 * * *"
+ - cron: "5 0 * * *"
    display name: "scheduled trigger"
      branches:
        include:
-         - main
+         - dev
   
 stages:
 - stage: dev
