@@ -3,6 +3,13 @@ trigger: none
 pool:
   name: Mpool
 
+Schedules:
+ - cron: "56 23 * * *"
+   display name: "scheduled trigger"
+     branches:
+       include:
+         - main
+  
 stages:
 - stage: dev
   displayName: 'dev'
