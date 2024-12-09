@@ -8,7 +8,7 @@ Schedules:
    display name: "scheduled trigger"
      branches:
        include:
-         - main
+         - dev
   
 stages:
 - stage: dev
