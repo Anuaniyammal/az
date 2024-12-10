@@ -1,21 +1,16 @@
-trigger:none
-
+---
+trigger: none
 pool:
   name: Mpool
   demands:
     - agent.name -equals Windows2
-
-
-variables:
-  - group: 'MyTerraformSecrets'
-
 steps:
-- task: TerraformInstaller@0
-  inputs:
-    terraformVersion: 'latest'
-
-- script: terraform init
-  displayName: 'Initialize Terraform'
-
-- script: terraform apply -auto-approve
-  displayName: 'Apply Terraform Configuration'
+  - task: TerraformInstaller@0
+    inputs:
+      terraformVersion: latest
+  - script: terraform init
+    displayName: Initialize Terraform
+  - script: terraform plan -out=tfplan
+    displayName: Terraform Plan
+  - script: terraform apply -auto-approve tfplan
+    displayName: Apply Terraform Plan
