@@ -1,41 +1,25 @@
-variable "resource_group_name" {
-  description = "The name of the resource group"
-  type        = string
+variable "rgname"{
+    type = string
+    description = "used for naming resource group"
 }
 
-#variable "location" {
-  #description = "The location of the resource group"
-  #type        = string
-  
-#}
-
-variable "storage_account_name" {
-  description = "The name of the storage account"
-  type        = string
+variable "location"{
+    type = string
+    description = "used for selecting location"
+    default = "eastus"
 }
 
-variable "environment" {
-  description = "environment name"
-  type        = string
-  default     = "dev"
+variable "prefix" {
+  type = string
+  description = "The prefix used for all resources in this example"
 }
 
-// variable "client_id" {
-//   description = "The name of the resource group"
-//   type        = string
-// }
+variable "vnet_cidr_prefix" {
+  type = string
+  description = "This variable defines address space for vnet"
+}
 
-// variable "tenant_id" {
-//   description = "The name of the resource group"
-//   type        = string
-// }
-
-// variable "client_secret" {
-//   description = "The name of the resource group"
-//   type        = string
-// }
-
-// variable "subscription_id" {
-//   description = "The name of the resource group"
-//   type        = string
-// }
+variable "subnet1_cidr_prefix" {
+  type = string
+  description = "This variable defines address space for subnetnet"
+}
